@@ -1,0 +1,19 @@
+services:
+
+  backend:
+    build:
+      context: .                   # ← sees the whole project
+      dockerfile: Api/Dockerfile   # ← uses this Dockerfile
+    container_name: potato_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./saved_model:/app/saved_model
+
+  frontend:
+    build: ./frontend
+    container_name: potato_ui
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
