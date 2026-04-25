@@ -1,4 +1,5 @@
 @echo off
 echo Stopping PotatoScan...
-docker-compose down
-echo Done!
+docker-compose stop
+echo Containers stopped successfully!
+pause
