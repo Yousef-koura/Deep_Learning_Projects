@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image
 from io import BytesIO
 from torchvision import transforms
+import torch
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import os
@@ -36,7 +37,8 @@ transform = transforms.Compose([
 
 def read_file_as_image(data: bytes) -> np.ndarray:
     image  = Image.open(BytesIO(data)).convert("RGB")
-    tensor = transform(image).unsqueeze(0)   # [1, 3, 224, 224]
+    tensor = transform(image)
+    tensor = torch.as_tensor(tensor).unsqueeze(0)  # IDE now knows it's a tensor
     return tensor.numpy()
 
 # ── Routes ────────────────────────────────────────────────────────────────────
